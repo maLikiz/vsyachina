@@ -256,9 +256,11 @@ $(".popup-recovery").css('display','inline-block');
         $("body").removeClass('popup-active');
         eventObject.preventDefault();
 
-        $('body').css({
-            'padding-right':0
-        })
+        if (!$('.sidebar').hasClass('active')) {
+            $('body').css({
+                'padding-right':0
+            })
+        }
     });
     $window = $(window)
     function changingVars() {
