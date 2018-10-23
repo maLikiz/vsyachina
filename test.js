@@ -1,61 +1,71 @@
-var $body = $('body');
+import { Component } from 'react';
 
-function hideSidebar() {
-    $('.sidebar').removeClass('active');
-    $body.removeAttr('style')
-}
+export class Greeter extends Component {
+    constructor(message) {
+        super();
+        this.greeting = message;
+    }
 
-function showSidebar() {
-    $('.sidebar').addClass('active');
-    $body.css({
-        'padding-right': SW
-    })
-}
+    greetFrom(...names) {
+        return (<div className="greeting">
+            Hello, {this.greeting} from
+            {names.map(name => <Name>{name}</Name>)}
+        </div>);
+    }
 
-function hidePopup() {
-    $('.popup').css('display', 'none');
-    $('.bg-popup').css('display', 'none');
-    $body.removeClass('popup-active');
-
-    if (!$('.sidebar').hasClass('active')) {
-        $body.css({
-            'padding-right': 0
-        });
+    greetNTimes({ name, times }) {
+        let greeting = this.greetFrom(name);
+        for (let i = 0; i < times; i++) {
+            console.log(greeting);
+        }
     }
 }
 
-function hidePopupOrSidebar() {
-    if ($('body').hasClass('popup-active')) {
-        hidePopup()
+new Greeter('foo').greetNTimes({ name: 'Webstorm', times: 3 });
+
+function * fibonacci(current = 1, next = 1) {
+    yield current;
+    yield * fibonacci(next, current + next);
+}
+
+let [first, second, ...rest] = take(fibonacci(), 10);
+
+function foo(x, y, z) {
+    var i = 0;
+    var x = { 0: 'zero', 1: 'one' };
+    var a = [0, 1, 2];
+    var foo = function () {};
+    var asyncFoo = async (x, y, z) => { };
+    var v = x.map(s => s.length);
+    if (!i > 10) {
+        for (var j = 0; j < 10; j++) {
+            switch (j) {
+                case 0:
+                    value = 'zero';
+                    break;
+                case 1:
+                    value = 'one';
+                    break;
+            }
+            var c = j > 5 ? 'GT 5' : 'LE 5';
+        }
     } else {
-        hideSidebar()
+        var j = 0;
+        try {
+            while (j < 10) {
+                if (i == j || j > 5) {
+                    a[j] = i + j * 12;
+                }
+                i = (j << 2) & 4;
+                j++;
+            }
+            do {
+                j--;
+            } while (j > 0);
+        } catch (e) {
+            alert('Failure: ' + e.message);
+        } finally {
+            reset(a, i);
+        }
     }
 }
-
-$('.popup .btn-close').click(function (eventObject) {
-    eventObject.preventDefault();
-    hidePopup()
-});
-
-$window.on('click', function(event) {
-    var eventTarget = event.target;
-    console.log(eventTarget)
-
-    if ((
-        $('.bg-popup').is(eventTarget)
-        && !$('.popup, .popup *').is(eventTarget)
-    ) || (
-        $('.sidebar').is(eventTarget)
-        && !$('.sidebar-nav, .sidebar-nav *').is(eventTarget)
-    )) {
-        hidePopupOrSidebar()
-    }
-});
-
-$window.on('keyup', function (event) {
-    var keyCode = event.keyCode || event.which;
-
-    if (keyCode === 27) {
-        hidePopupOrSidebar()
-    }
-});

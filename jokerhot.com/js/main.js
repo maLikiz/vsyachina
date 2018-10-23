@@ -52,37 +52,38 @@ $(document).ready(function() {
 
     function hideSidebar() {
         $('.sidebar').removeClass('active');
-        $body.removeAttr('style')
+        $body.removeAttr('style');
     }
 
     function showSidebar() {
         $('.sidebar').addClass('active');
         $body.css({
             'padding-right': SW
-        })
+        });
     }
 
     $('.btn-menu').click(function(eventObject) {
         $(this).toggleClass('active');
-        $body.toggleClass("menu-active");
+        $body.toggleClass('menu-active');
 
         if ($('.sidebar').hasClass('active')) {
-            hideSidebar()
+            hideSidebar();
         } else {
-            showSidebar()
+            showSidebar();
         }
         eventObject.preventDefault();
     });
+
     $('.btn-menu2').click(function(eventObject) {
         $(this).toggleClass('active');
-        $(".main-nav ul").toggleClass("active");
+        $('.main-nav ul').toggleClass('active');
         eventObject.preventDefault();
     });
 
     $('.marker').click(function(eventObject) {
         $('.marker').removeClass('active');
         $(this).addClass('active');
-        var id = "#" + $(this).attr('data-tab');
+        var id = '#' + $(this).attr('data-tab');
         $('.info-block').removeClass('active');
         $(id).addClass('active');
 
@@ -90,58 +91,58 @@ $(document).ready(function() {
     });
 
     $('.open-login').click(function(eventObject) {
-        $(".popup-recovery").css('display', 'none');
-        $(".popup-registration").css('display', 'none');
-        $(".popup-login").css('display', 'inline-block');
-        $(".bg-popup").css('display', 'inline-block');
+        $('.popup-recovery').css('display', 'none');
+        $('.popup-registration').css('display', 'none');
+        $('.popup-login').css('display', 'inline-block');
+        $('.bg-popup').css('display', 'inline-block');
         $body.addClass('popup-active');
         eventObject.preventDefault();
 
         $body.css({
             'padding-right': SW
-        })
+        });
     });
 
     $('.open-recovery').click(function(eventObject) {
-        $(".popup-login").css('display', 'none');
-        $(".popup-registration").css('display', 'none');
-        $(".popup-recovery").css('display', 'inline-block');
-        $(".bg-popup").css('display', 'inline-block');
+        $('.popup-login').css('display', 'none');
+        $('.popup-registration').css('display', 'none');
+        $('.popup-recovery').css('display', 'inline-block');
+        $('.bg-popup').css('display', 'inline-block');
         $body.addClass('popup-active');
         eventObject.preventDefault();
 
-        $body.css({'padding-right': SW});
+        $body.css({ 'padding-right': SW });
     });
 
     $('.open-account').click(function(eventObject) {
-        $(".popup-help").css('display', 'none');
-        $(".account").css('display', 'inline-block');
-        $(".bg-popup").css('display', 'inline-block');
+        $('.popup-help').css('display', 'none');
+        $('.account').css('display', 'inline-block');
+        $('.bg-popup').css('display', 'inline-block');
         $body.addClass('popup-active');
         eventObject.preventDefault();
-        $body.css({'padding-right': SW});
+        $body.css({ 'padding-right': SW });
     });
 
     $('.open-help').click(function(eventObject) {
-        $(".account").css('display', 'none');
-        $(".popup-help").css('display', 'inline-block');
-        $(".bg-popup").css('display', 'inline-block');
+        $('.account').css('display', 'none');
+        $('.popup-help').css('display', 'inline-block');
+        $('.bg-popup').css('display', 'inline-block');
         $body.addClass('popup-active');
         eventObject.preventDefault();
-        $body.css({'padding-right': SW});
+        $body.css({ 'padding-right': SW });
     });
 
     $('.open-registration').click(function(eventObject) {
-        $(".popup-login").css('display', 'none');
-        $(".popup-recovery").css('display', 'none');
-        $(".registration").css('visibility', 'visible');
-        $(".registration").css('display', 'inline-block');
-        $(".bg-popup").css('display', 'block');
+        $('.popup-login').css('display', 'none');
+        $('.popup-recovery').css('display', 'none');
+        $('.registration').css('visibility', 'visible');
+        $('.registration').css('display', 'inline-block');
+        $('.bg-popup').css('display', 'block');
         $body.addClass('popup-active');
         eventObject.preventDefault();
         $body.css({
             'padding-right': SW
-        })
+        });
     });
 
     function hidePopup() {
@@ -158,15 +159,15 @@ $(document).ready(function() {
 
     function hidePopupOrSidebar() {
         if ($('body').hasClass('popup-active')) {
-            hidePopup()
+            hidePopup();
         } else {
-            hideSidebar()
+            hideSidebar();
         }
     }
 
     $('.popup .btn-close').click(function(eventObject) {
         eventObject.preventDefault();
-        hidePopup()
+        hidePopup();
     });
 
     $window.on('click', function(event) {
@@ -179,7 +180,7 @@ $(document).ready(function() {
             $('.sidebar').is(eventTarget)
             && !$('.sidebar-nav, .sidebar-nav *').is(eventTarget)
         )) {
-            hidePopupOrSidebar()
+            hidePopupOrSidebar();
         }
     });
 
@@ -187,7 +188,7 @@ $(document).ready(function() {
         var keyCode = event.keyCode || event.which;
 
         if (keyCode === 27) {
-            hidePopupOrSidebar()
+            hidePopupOrSidebar();
         }
     });
 
@@ -202,34 +203,34 @@ $(document).ready(function() {
         SW = div.offsetWidth - div.clientWidth;
         document.body.removeChild(div);
 
-        window_width = $window.width() + SW
-        window_height = $window.height()
+        window_width = $window.width() + SW;
+        window_height = $window.height();
 
-        scroll = $window.scrollTop()
+        scroll = $window.scrollTop();
     }
 
-    changeDOM = [null]
+    changeDOM = [null];
 
     function adaptive() {
-        $playingPlacesWrapper = $('.playing-places-wrapper')
+        $playingPlacesWrapper = $('.playing-places-wrapper');
         if (window_width < 1440) {
             if (changeDOM[0] != 0) {
-                $playingPlacesWrapper.insertAfter('.tournament')
-                changeDOM = 0
+                $playingPlacesWrapper.insertAfter('.tournament');
+                changeDOM = 0;
             }
         } else {
 
             if (changeDOM[0] != 1) {
                 $playingPlacesWrapper.appendTo('.tournament-info-wrapper');
-                changeDOM = 1
+                changeDOM = 1;
             }
         }
     }
 
-    changingVars()
-    adaptive()
+    changingVars();
+    adaptive();
     $window.resize(function() {
-        changingVars()
-        adaptive()
-    })
-})
+        changingVars();
+        adaptive();
+    });
+});
