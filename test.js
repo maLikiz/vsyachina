@@ -37,7 +37,7 @@ $('.popup .btn-close').click(function (eventObject) {
     hidePopup()
 });
 
-$window.on('click', function (event) {
+$window.on('click', function(event) {
     var eventTarget = event.target;
     console.log(eventTarget)
 

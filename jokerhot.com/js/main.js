@@ -1,6 +1,10 @@
-
 $(document).ready(function() {
-jackpot(); setInterval(jackpot,1000);
+
+    var $window = $(window);
+    var $body = $('body');
+
+    jackpot();
+    setInterval(jackpot, 1000);
 
     $('.screenshots-carousel').slick({
         centerMode: true,
@@ -46,105 +50,147 @@ jackpot(); setInterval(jackpot,1000);
         adaptiveHeight: true
     });
 
+    function hideSidebar() {
+        $('.sidebar').removeClass('active');
+        $body.removeAttr('style')
+    }
 
+    function showSidebar() {
+        $('.sidebar').addClass('active');
+        $body.css({
+            'padding-right': SW
+        })
+    }
 
-    $('.btn-menu').click(function(eventObject){
+    $('.btn-menu').click(function(eventObject) {
         $(this).toggleClass('active');
-        $("body").toggleClass("menu-active");
+        $body.toggleClass("menu-active");
+
         if ($('.sidebar').hasClass('active')) {
-            $(".sidebar").removeClass("active");
-            $('body').removeAttr('style')
+            hideSidebar()
         } else {
-            $(".sidebar").addClass("active");
-            $('body').css({
-                'padding-right':SW
-            })
+            showSidebar()
         }
         eventObject.preventDefault();
     });
-    $('.btn-menu2').click(function(eventObject){
+    $('.btn-menu2').click(function(eventObject) {
         $(this).toggleClass('active');
         $(".main-nav ul").toggleClass("active");
         eventObject.preventDefault();
     });
 
-    $('.marker').click(function(eventObject){
+    $('.marker').click(function(eventObject) {
         $('.marker').removeClass('active');
         $(this).addClass('active');
-        var id  ="#" + $(this).attr('data-tab');
+        var id = "#" + $(this).attr('data-tab');
         $('.info-block').removeClass('active');
         $(id).addClass('active');
 
         eventObject.preventDefault();
     });
 
-    $('.open-login').click(function(eventObject){
-        $(".popup-recovery").css('display','none');
-        $(".popup-registration").css('display','none');
-        $(".popup-login").css('display','inline-block');
-        $(".bg-popup").css('display','inline-block');
-        $("body").addClass('popup-active');
+    $('.open-login').click(function(eventObject) {
+        $(".popup-recovery").css('display', 'none');
+        $(".popup-registration").css('display', 'none');
+        $(".popup-login").css('display', 'inline-block');
+        $(".bg-popup").css('display', 'inline-block');
+        $body.addClass('popup-active');
         eventObject.preventDefault();
 
-        $('body').css({
-            'padding-right':SW
+        $body.css({
+            'padding-right': SW
         })
     });
 
-    $('.open-recovery').click(function(eventObject){
-        $(".popup-login").css('display','none');
-        $(".popup-registration").css('display','none');
-$(".popup-recovery").css('display','inline-block');
-        $(".bg-popup").css('display','inline-block');
-        $("body").addClass('popup-active');
+    $('.open-recovery').click(function(eventObject) {
+        $(".popup-login").css('display', 'none');
+        $(".popup-registration").css('display', 'none');
+        $(".popup-recovery").css('display', 'inline-block');
+        $(".bg-popup").css('display', 'inline-block');
+        $body.addClass('popup-active');
         eventObject.preventDefault();
 
-        $('body').css({'padding-right':SW});
+        $body.css({'padding-right': SW});
     });
 
-    $('.open-account').click(function(eventObject){
-$(".popup-help").css('display','none');
-        $(".account").css('display','inline-block');
-        $(".bg-popup").css('display','inline-block');
-        $("body").addClass('popup-active');
+    $('.open-account').click(function(eventObject) {
+        $(".popup-help").css('display', 'none');
+        $(".account").css('display', 'inline-block');
+        $(".bg-popup").css('display', 'inline-block');
+        $body.addClass('popup-active');
         eventObject.preventDefault();
-$('body').css({'padding-right':SW});
+        $body.css({'padding-right': SW});
     });
 
-    $('.open-help').click(function(eventObject){
-$(".account").css('display','none');
-        $(".popup-help").css('display','inline-block');
-        $(".bg-popup").css('display','inline-block');
-        $("body").addClass('popup-active');
+    $('.open-help').click(function(eventObject) {
+        $(".account").css('display', 'none');
+        $(".popup-help").css('display', 'inline-block');
+        $(".bg-popup").css('display', 'inline-block');
+        $body.addClass('popup-active');
         eventObject.preventDefault();
-$('body').css({'padding-right':SW});
+        $body.css({'padding-right': SW});
     });
 
-    $('.open-registration').click(function(eventObject){
-        $(".popup-login").css('display','none');
-        $(".popup-recovery").css('display','none');
-        $(".registration").css('visibility','visible');
-        $(".registration").css('display','inline-block');
-        $(".bg-popup").css('display','block');
-        $("body").addClass('popup-active');
+    $('.open-registration').click(function(eventObject) {
+        $(".popup-login").css('display', 'none');
+        $(".popup-recovery").css('display', 'none');
+        $(".registration").css('visibility', 'visible');
+        $(".registration").css('display', 'inline-block');
+        $(".bg-popup").css('display', 'block');
+        $body.addClass('popup-active');
         eventObject.preventDefault();
-        $('body').css({
-            'padding-right':SW
+        $body.css({
+            'padding-right': SW
         })
     });
-    $('.popup .btn-close').click(function(eventObject){
-        $(".popup").css('display','none');
-        $(".bg-popup").css('display','none');
-        $("body").removeClass('popup-active');
-        eventObject.preventDefault();
 
- if (!$('.sidebar').hasClass('active')) {
-            $('body').css({
-                'padding-right':0
+    function hidePopup() {
+        $('.popup').css('display', 'none');
+        $('.bg-popup').css('display', 'none');
+        $body.removeClass('popup-active');
+
+        if (!$('.sidebar').hasClass('active')) {
+            $body.css({
+                'padding-right': 0
             });
         }
+    }
+
+    function hidePopupOrSidebar() {
+        if ($('body').hasClass('popup-active')) {
+            hidePopup()
+        } else {
+            hideSidebar()
+        }
+    }
+
+    $('.popup .btn-close').click(function(eventObject) {
+        eventObject.preventDefault();
+        hidePopup()
     });
-    $window = $(window)
+
+    $window.on('click', function(event) {
+        var eventTarget = event.target;
+
+        if ((
+            $('.bg-popup').is(eventTarget)
+            && !$('.popup, .popup *').is(eventTarget)
+        ) || (
+            $('.sidebar').is(eventTarget)
+            && !$('.sidebar-nav, .sidebar-nav *').is(eventTarget)
+        )) {
+            hidePopupOrSidebar()
+        }
+    });
+
+    $window.on('keyup', function(event) {
+        var keyCode = event.keyCode || event.which;
+
+        if (keyCode === 27) {
+            hidePopupOrSidebar()
+        }
+    });
+
     function changingVars() {
         var div = document.createElement('div');
         div.style.overflowY = 'scroll';
@@ -161,7 +207,9 @@ $('body').css({'padding-right':SW});
 
         scroll = $window.scrollTop()
     }
+
     changeDOM = [null]
+
     function adaptive() {
         $playingPlacesWrapper = $('.playing-places-wrapper')
         if (window_width < 1440) {
@@ -177,6 +225,7 @@ $('body').css({'padding-right':SW});
             }
         }
     }
+
     changingVars()
     adaptive()
     $window.resize(function() {
