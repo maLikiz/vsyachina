@@ -1,6 +1,10 @@
 
 $(document).ready(function() {
-jackpot(); setInterval(jackpot,1000);
+
+    var $window = $(window);
+    var $body = $('body');
+
+    jackpot(); setInterval(jackpot,1000);
 
     $('.screenshots-carousel').slick({
         centerMode: true,
@@ -46,19 +50,26 @@ jackpot(); setInterval(jackpot,1000);
         adaptiveHeight: true
     });
 
+    function hideSidebar() {
+        $(".sidebar").removeClass("active");
+        $body.removeAttr('style')
+    }
 
+    function showSidebar() {
+        $(".sidebar").addClass("active");
+        $body.css({
+            'padding-right':SW
+        })
+    }
 
     $('.btn-menu').click(function(eventObject){
         $(this).toggleClass('active');
-        $("body").toggleClass("menu-active");
+        $body.toggleClass("menu-active");
+
         if ($('.sidebar').hasClass('active')) {
-            $(".sidebar").removeClass("active");
-            $('body').removeAttr('style')
+            hideSidebar()
         } else {
-            $(".sidebar").addClass("active");
-            $('body').css({
-                'padding-right':SW
-            })
+            showSidebar()
         }
         eventObject.preventDefault();
     });
@@ -86,7 +97,7 @@ jackpot(); setInterval(jackpot,1000);
         $("body").addClass('popup-active');
         eventObject.preventDefault();
 
-        $('body').css({
+        $body.css({
             'padding-right':SW
         })
     });
@@ -99,7 +110,7 @@ $(".popup-recovery").css('display','inline-block');
         $("body").addClass('popup-active');
         eventObject.preventDefault();
 
-        $('body').css({'padding-right':SW});
+        $body.css({'padding-right':SW});
     });
 
     $('.open-account').click(function(eventObject){
@@ -108,7 +119,7 @@ $(".popup-help").css('display','none');
         $(".bg-popup").css('display','inline-block');
         $("body").addClass('popup-active');
         eventObject.preventDefault();
-$('body').css({'padding-right':SW});
+$body.css({'padding-right':SW});
     });
 
     $('.open-help').click(function(eventObject){
@@ -117,7 +128,7 @@ $(".account").css('display','none');
         $(".bg-popup").css('display','inline-block');
         $("body").addClass('popup-active');
         eventObject.preventDefault();
-$('body').css({'padding-right':SW});
+$body.css({'padding-right':SW});
     });
 
     $('.open-registration').click(function(eventObject){
@@ -128,23 +139,52 @@ $('body').css({'padding-right':SW});
         $(".bg-popup").css('display','block');
         $("body").addClass('popup-active');
         eventObject.preventDefault();
-        $('body').css({
+        $body.css({
             'padding-right':SW
         })
     });
-    $('.popup .btn-close').click(function(eventObject){
+
+    function closePopup() {
         $(".popup").css('display','none');
         $(".bg-popup").css('display','none');
         $("body").removeClass('popup-active');
-        eventObject.preventDefault();
 
- if (!$('.sidebar').hasClass('active')) {
-            $('body').css({
+        if (!$('.sidebar').hasClass('active')) {
+            $body.css({
                 'padding-right':0
             });
         }
+    }
+
+    $('.popup .btn-close').click(function(eventObject){
+        eventObject.preventDefault();
+        closePopup()
     });
-    $window = $(window)
+
+    $window.on('click', function (event) {
+        var eventTarget = event.target;
+
+        if (
+            eventTarget === $('.bg-popup')
+            && eventTarget !== $('.popup, .popup *')
+            && eventTarget !== $('.sidebar, .sidebar *')
+        ) {
+            if ($('.sidebar').hasClass('active')) {
+                hideSidebar()
+            } else {
+                closePopup()
+            }
+        }
+    });
+
+    $window.on('keyup', function(event) {
+        var keyCode = event.keyCode || event.which;
+
+        if (keyCode === 27) {
+            closePopup();
+        }
+    });
+
     function changingVars() {
         var div = document.createElement('div');
         div.style.overflowY = 'scroll';
