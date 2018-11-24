@@ -2251,6 +2251,15 @@ webkit-box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.9);
 box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.9);
 line-height: 24px;
 }
+.select2 {
+position: absolute;
+left: 0;
+right: 0;
+top: 0;
+bottom: 0;
+display: block;
+width: 100%;
+}
 .select-area.select-select2 {
 -webkit-box-shadow: inset 0px 0px 9px 0px rgba(0, 0, 0, 0.9);
 -moz-box-shadow: inset 0px 0px 9px 0px rgba(0, 0, 0, 0.9);
@@ -2289,6 +2298,7 @@ transform: translateY(-50%);
 .select-area .select-opener:after {
 display: inline-block;
 color: #1f5c70;
+pointer-events: none;
 }
 .select-focus {
 background: #353346;
