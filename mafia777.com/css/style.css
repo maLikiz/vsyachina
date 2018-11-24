@@ -364,7 +364,7 @@ color: #fff;
 background-image: url(/img/bg.jpg);
 }
 body.active-mobile {
-padding-left: 230px;
+padding-left: 0;
 overflow: hidden;
 position: relative;
 height: 100%;
@@ -3676,10 +3676,11 @@ padding: 0 20px;
 body.active-mobile > .wrapper {
 height: 100vh;
 position: fixed;
-left: 230px;
+left: 0;
 right: -230px;
 top: 0;
 overflow: hidden;
+padding-left: 230px;
 }
 .depwindow {
 display: none;
